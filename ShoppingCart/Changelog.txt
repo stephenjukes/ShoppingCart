@@ -1,5 +1,7 @@
 ChangeLog:
 
+v2-add-tests:
+	a. All Basic Initialisation and Quantities tests passing
 InitialCommit:
     a. All interfaces defined
     b. Some concrete classes defined
