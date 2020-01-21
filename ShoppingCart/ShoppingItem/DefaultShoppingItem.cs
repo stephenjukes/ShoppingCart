@@ -5,8 +5,12 @@ using System.Text;
 
 namespace ShoppingCart.ShoppingItem
 {
-    class DefaultShoppingItem : IShoppingItem
+    public class DefaultShoppingItem : IShoppingItem
     {
+        public DefaultShoppingItem()
+        { 
+        }
+
         public DefaultShoppingItem(long id, Item name)
         {
             Id = id;
@@ -15,6 +19,6 @@ namespace ShoppingCart.ShoppingItem
 
         public long Id { get; }
         public Item Name { get; }   // of type Item, since we're using enums
-        //public IEnumerable<ITaxRule> TaxRules { get; }
+        public IEnumerable<ITaxRule> TaxRules { get; }
     }
 }

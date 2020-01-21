@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ShoppingCart.ShoppingItem
 {
-    interface IShoppingItem
+    public interface IShoppingItem
     {
         long Id { get; }
         Item Name { get; }
-       //IEnumerable<ITaxRule> TaxRules { get; }
+        IEnumerable<ITaxRule> TaxRules { get; }
     }
 }

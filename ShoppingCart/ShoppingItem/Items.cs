@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingCart.ShoppingItem
 {
-    enum Item
+    public enum Item
     {
         Pasta,
         Rice,

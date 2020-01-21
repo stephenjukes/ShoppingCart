@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingCart.Updated
 {
-    class ShoppingUpdatedEventArgs : EventArgs
+    public class ShoppingUpdatedEventArgs : EventArgs
     {
     }
 }

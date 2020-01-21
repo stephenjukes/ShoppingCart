@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ShoppingCart
 {
-    interface IShoppingBasketItem : IShoppingItem, ITotals, IUpdated, IEnumerator
+    public interface IShoppingBasketItem : IShoppingItem, ITotals, IUpdated
     {
         int Quantity { get; set; }
     }

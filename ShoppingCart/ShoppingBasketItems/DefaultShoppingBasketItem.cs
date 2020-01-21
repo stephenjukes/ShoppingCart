@@ -7,39 +7,36 @@ using ShoppingCart.Updated;
 
 namespace ShoppingCart.ShoppingBasketItems
 {
-    class DefaultShoppingBasketItem : IShoppingBasketItem
+    public class DefaultShoppingBasketItem : IShoppingBasketItem
     {
-        public int Quantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DefaultShoppingBasketItem(int index, Item item)
+        {
+        }
+
+        // Is this really the only way I can populate readonly properties ???
+        public DefaultShoppingBasketItem(long id, Item name, decimal subTotal, decimal tax, IEnumerable<ITaxRule> taxRules)
+        {
+            Id = id;
+            Name = name;
+            SubTotal = subTotal;
+            Tax = tax;
+            TaxRules = taxRules;
+        }
+
+        public int Quantity { get; set; }
 
         public long Id { get; }
 
-        public string Name { get; }
+        public Item Name { get; }
 
-        Item IShoppingItem.Name => throw new NotImplementedException();
+        public IEnumerable<ITaxRule> TaxRules { get; }
 
-        //public IEnumerable<ITaxRule> TaxRules { get; }
+        public decimal SubTotal { get; }
 
-        public decimal SubTotal => throw new NotImplementedException();
+        public decimal Tax { get; }
 
-        public decimal Tax => throw new NotImplementedException();
-
-        public decimal Total => throw new NotImplementedException();
-
-        public object Current => throw new NotImplementedException();
-
-
+        public decimal Total { get; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
-
-        // Enumerator on IShoppingBasketItem
-        public bool MoveNext()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Reset()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

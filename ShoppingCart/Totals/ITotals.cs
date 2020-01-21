@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingCart.Totals
 {
-    interface ITotals
+    public interface ITotals
     {
         decimal SubTotal { get; }
         decimal Tax { get; }

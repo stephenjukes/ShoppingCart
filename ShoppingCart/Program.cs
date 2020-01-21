@@ -14,7 +14,12 @@ namespace ShoppingCart
             var shoppingItems = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
                 .Select((item, index) => new DefaultShoppingItem(index, item));
 
-            var shoppingBasket = new DefaultBasket(shoppingItems);
+            var shoppingBasket = new DefaultBasket();
+
+            foreach(var item in shoppingBasket.Items)
+            {
+                Console.WriteLine($"{item.Id}: {item.Name}");
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ using ShoppingCart.ShoppingBasket;
 
 namespace ShoppingCart.TaxRules
 {
-    class ItemSubTotalPercentageTaxRule : ITaxRule
+    public class ItemSubTotalPercentageTaxRule : ITaxRule
     {
         public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
         {

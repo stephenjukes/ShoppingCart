@@ -9,43 +9,50 @@ using ShoppingCart.Updated;
 namespace ShoppingCart.ShoppingBasket
 {
     // DO WE NEED A DESIGN PATTERN WHERE BASKET ITEMS ARE ALWAYS MATCHED TO SHOPPING CARTS?
-    class DefaultBasket : IShoppingBasket
+    public class DefaultBasket : IShoppingBasket
     {
-        public IEnumerable<IShoppingBasketItem> Items { get; }
+        // Is there a way that we can use the List methods???
+        // INSTRUCTIONS DO NOT ALLOW 'SET' !!!
+        // Cant this List be used?
+        public IEnumerable<IShoppingBasketItem> Items { get; } = new List<IShoppingBasketItem>();
 
         public DefaultBasket()
         {
-            // Instruction specify a paramaterless constructor
-            // Name can be populated using the Item enum, Id can be populated by index. TaxRules is a problem.
+            Items = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
+                .Select((itemName, index) => 
+                    (IShoppingBasketItem) new DefaultShoppingBasketItem(index, itemName, 0, 0, null) { Quantity = 0 })
+                .ToList();
         }
 
         public DefaultBasket(IEnumerable<IShoppingItem> items)
         {
+            // This may not run since it attempts to cast derived from base
             Items = items.Select(item => (IShoppingBasketItem)item);
         }
 
-
-
-
         // Add Functionality to limit according to stock
-        public IShoppingBasketItem AddItem (IShoppingItem item) 
+        public IShoppingBasketItem AddItem(IShoppingItem item)
             => AddItem(item, 1);
 
-        public IShoppingBasketItem AddItem(IShoppingItem item, int quantity) 
-            => ModifyItems(item, quantity, (basketItem, added) => basketItem.Quantity += added);
-
-        public IShoppingBasketItem RemoveItem(IShoppingBasketItem item)
-            => ModifyItems(item, 0, (basketItem, added) => basketItem.Quantity = 0);
-
-        private IShoppingBasketItem ModifyItems(IShoppingItem shoppingItem, int quantity, Action<IShoppingBasketItem, int> action)
+        public IShoppingBasketItem AddItem(IShoppingItem item, int quantity)
         {
-            foreach (var basketItem in Items)
-            {
-                if (basketItem.Id == shoppingItem.Id) action(basketItem, quantity);
-            }
+            if (quantity < 1) throw new ArgumentOutOfRangeException("Item quantity cannot be less than 1");
 
-            return (IShoppingBasketItem)shoppingItem;
+            var basketItem = Items.FirstOrDefault(i => i.Id == item.Id);
+            basketItem.Quantity = quantity;
+
+            return basketItem;
         }
+            
+
+        public IShoppingBasketItem RemoveItem(IShoppingItem item)
+        {
+            var basketItem = item as IShoppingBasketItem;
+            //Items.Remove(basketItem);
+            return basketItem;
+        }
+
+        
 
 
 

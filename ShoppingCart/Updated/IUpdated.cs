@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingCart.Updated
 {
-    interface IUpdated
+    public interface IUpdated
     {
         event EventHandler<ShoppingUpdatedEventArgs> Updated;
     }

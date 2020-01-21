@@ -1,0 +1,6 @@
+ChangeLog:
+
+InitialCommit:
+    a. All interfaces defined
+    b. Some concrete classes defined
+    c. Functionality to Add and Remove from basket
