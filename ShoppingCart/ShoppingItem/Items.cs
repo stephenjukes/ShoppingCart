@@ -17,6 +17,8 @@ namespace ShoppingCart.ShoppingItem
         Cheese,
         Tomatoes,
         Apples,
-        Soup
+        Soup,
+        XBox
+
     }
 }

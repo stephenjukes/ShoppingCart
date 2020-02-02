@@ -9,17 +9,16 @@ namespace ShoppingCart.ShoppingBasketItems
 {
     public class DefaultShoppingBasketItem : IShoppingBasketItem
     {
-        public DefaultShoppingBasketItem(int index, Item item)
-        {
+        public DefaultShoppingBasketItem()
+        { 
         }
 
         // Is this really the only way I can populate readonly properties ???
-        public DefaultShoppingBasketItem(long id, Item name, decimal subTotal, decimal tax, IEnumerable<ITaxRule> taxRules)
+        public DefaultShoppingBasketItem(long id, Item name, decimal unitPrice, IEnumerable<ITaxRule> taxRules)
         {
             Id = id;
             Name = name;
-            SubTotal = subTotal;
-            Tax = tax;
+            UnitPrice = unitPrice;
             TaxRules = taxRules;
         }
 
@@ -29,13 +28,16 @@ namespace ShoppingCart.ShoppingBasketItems
 
         public Item Name { get; }
 
+        public decimal UnitPrice { get; }
+
         public IEnumerable<ITaxRule> TaxRules { get; }
 
-        public decimal SubTotal { get; }
+        // Instructions state that none of these should have setters!!!
+        public decimal SubTotal { get; set; }
 
-        public decimal Tax { get; }
+        public decimal Tax { get; set; }
 
-        public decimal Total { get; }
+        public decimal Total { get; set; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
     }

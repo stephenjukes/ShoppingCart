@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using FluentAssertions;
 using ShoppingCart;
 using ShoppingCart.ShoppingBasket;
 using ShoppingCart.ShoppingBasketItems;
 using ShoppingCart.ShoppingItem;
+using ShoppingCart.TaxRules;
+using ShoppingCart.Totals;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using Tests.TestModels;
 
 namespace Tests
 {
     [Binding]
     // Change this name while keeping steps bound
+    // Comments needed for each assertion
     public class SpecFlowFeature1Steps
     {
         private IShoppingBasket _shoppingBasket;
-        //private IEnumerable<IShoppingItem> _shoppingItems;    // Probably not necessary now.
+        private IEnumerable<TestTaxRule> TaxRules = new TestTaxRule[0];
         private Exception _exception;
 
         [Given(@"a new basket is instantiated")]
@@ -28,14 +33,37 @@ namespace Tests
             //_shoppingItems = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
             //    .Select((item, index) => new DefaultShoppingItem(index, item));
         }
-        
+
+        [Given(@"the following tax rules:")]
+        public void GivenTheFollowingTaxRules(Table table)
+        {
+            //var b = a.TaxRule;
+            //var c = typeof(TaxRules).GetField(b).GetValue(typeof(TaxRules));
+
+            TaxRules = table
+                .CreateSet<TestTaxRule>()
+                .Select(row =>
+                   {
+                       try
+                       {
+                           return new TestTaxRule
+                           {
+                               Id = row.Id,
+                               TaxRule = (ITaxRule)(typeof(TaxRules).GetField(row.RuleName).GetValue(typeof(TaxRules)))
+                           };
+                       }
+                       catch(Exception e)
+                       {
+                           throw new ArgumentOutOfRangeException($"No tax rule found with name '{row.RuleName}' ");
+                       }  
+                   });
+        }
+
 
         [Then(@"the basket has (\d+) items")]
         public void ThenTheBasketHasItems(int expectedNumberOfItems)
         {
-            // Is there a better way message, given that conflict.Name will throw a NullReferenceException?
-            var items = _shoppingBasket.Items.Where(i => i.Quantity > 0);
-            items.Should().HaveCount(expectedNumberOfItems);
+            _shoppingBasket.Items.Should().HaveCount(expectedNumberOfItems);
         }
 
         [Then(@"all totals are (\d+)")]
@@ -50,35 +78,10 @@ namespace Tests
             conflict.Should().BeNull($"At least one item does not have quantity of {expectedTotal}");
         }
 
-        [When(@"the item '(.*)' is added without an explicit quantity")]
-        public void WhenTheItemIsAddedWithoutAnExplicitQuantity(string itemName)
-        {
-            var shoppingItem = (IShoppingItem)GetBasketItem(itemName);
-            _shoppingBasket.AddItem(shoppingItem);
-        }
-
-
-        [Given(@"the item '(\w+)' is added with a quantity of (\d+)")]
-        [When(@"the item '(\w+)' is added with a quantity of (-?\d+\.?\d*)")]
-        public void WhenTheItemIsAddedWithAQuantityOf(string itemName, int quantity)
-        {
-            var shoppingItem = (IShoppingItem)GetBasketItem(itemName);
-            try
-            {
-                _shoppingBasket.AddItem(shoppingItem, quantity);
-            }
-            catch (Exception e)
-            {
-                _exception = e;
-            }
-        }
-
         [Then(@"the item '(\w+)' has a quantity of (\d+)")]
         public void ThenTheItemHasAQuantityOf(string itemName, int expectedQuantity)
         {
             var basketItem = GetBasketItem(itemName);
-            
-
             basketItem.Quantity.Should().Be(expectedQuantity);
         }
 
@@ -90,14 +93,46 @@ namespace Tests
             _exception.Should().BeOfType(type);
         }
 
-        [Given(@"a new basket with the following items:")]
-        public void GivenANewBasketWithTheFollowingItems(Table table)
+        // Refactor into smaller methods???
+        [When(@"the following items are added:")]
+        public void WhenTheFollowingItemsAreAdded(Table table)
         {
-            var basketItems = table.CreateSet<ShoppingBasketItem>()
-                .Select(i => new DefaultShoppingBasketItem(i.Id, i.Name, i.SubTotal.IntoDecimal(), i.Tax, i.TaxRules));
+            // Refactor to base steps???
+            var shoppingItemsForBasket = table.CreateSet<TestShoppingItem>()
+                .Select(row =>
+                {
+                    var taxRules = GetTaxRulesFromIds(row.TaxRuleIds);
+                    return new TestShoppingItem
+                    {
+                        Quantity = row.Quantity,
+                        ShoppingItem = new DefaultShoppingItem(row.Id, row.Name, row.UnitPrice.IntoDecimal(), taxRules)
+                    };
+                });
 
-            _shoppingBasket = new DefaultBasket(basketItems);
+            foreach (var forBasket in shoppingItemsForBasket)
+            {
+                if (String.IsNullOrEmpty(forBasket.Quantity))
+                {
+                    _shoppingBasket.AddItem(forBasket.ShoppingItem);
+                }
+                else
+                {
+                    var isIntegerQuantity = int.TryParse(forBasket.Quantity, out int quantity);
+                    if (!isIntegerQuantity) throw new ArgumentOutOfRangeException("Quanity is not a valid integer.");
+
+                    try
+                    {
+                        _shoppingBasket.AddItem(forBasket.ShoppingItem, quantity);
+                    }
+                    catch (Exception e)
+                    {
+                        _exception = e;
+                    }
+                }
+            }
         }
+
+
 
         [Then(@"the item '(\w+)' has a subtotal of '(.?[\d+,]+\.?\d{0,2}[a-z]?)'")]
         public void ThenTheItemHasASubtotalOfP(string itemName, string expectedSubtotal)
@@ -113,10 +148,61 @@ namespace Tests
             _shoppingBasket.SubTotal.Should().Be(expectedSubtotal.IntoDecimal());
         }
 
-        private IShoppingBasketItem GetBasketItem(string itemName)
+        [Then(@"the basket contains the following items:")]
+        public void ThenTheBasketContainsTheFollowingItems(Table table)
         {
-            var isEnum = Enum.TryParse(itemName, true, out Item itemEnum);
-            return _shoppingBasket.Items.FirstOrDefault(i => i.Name == itemEnum);
+            // Ideally we should be creating an instance of DefaultShoppingBasketItem, but this causes problems.
+            var expectedBasketItems = table.CreateSet<TestShoppingBasketItem>()
+            .Select(row =>
+                {
+                    // what about validating other fields?
+                    var isValidQuantity = int.TryParse(row.Quantity, out int quantity);
+                    if (!isValidQuantity) throw new ArgumentOutOfRangeException("Quantity should be an integer value");
+
+                    var taxRules = GetTaxRulesFromIds(row.TaxRuleIds);
+                    return new DefaultShoppingBasketItem(row.Id, row.Name, row.UnitPrice, taxRules)
+                        {
+                            Quantity = quantity,
+                            SubTotal = row.SubTotal.IntoDecimal(),
+                            Tax = row.Tax.IntoDecimal(),
+                            Total = row.Total.IntoDecimal()
+                        };
+                });
+
+            _shoppingBasket.Items.Should().BeEquivalentTo(expectedBasketItems, options => options
+                    .Excluding( o => o.UnitPrice )
+                    .Excluding( o => o.TaxRules)
+                );
+        }
+
+        [Then(@"the basket has the following totals:")]
+        public void ThenTheBasketHasTheFollowingTotals(Table table)
+        {
+            var expectedBasketTotals = table.CreateSet<TestTotals>()
+                .Select(row => new DefaultBasket
+                 {
+                     SubTotal = row.SubTotal.IntoDecimal(),
+                     Tax = row.Tax.IntoDecimal(),
+                     Total = row.Total.IntoDecimal()
+                })
+                .FirstOrDefault();
+
+            _shoppingBasket.Should().BeEquivalentTo(expectedBasketTotals, options => options.Excluding(o => o.Items));
+        }
+
+
+
+        private IShoppingBasketItem GetBasketItem(string item)
+            =>_shoppingBasket.Items.FirstOrDefault(i => i.Name == item.ToEnum<Item>());
+
+        private IEnumerable<ITaxRule> GetTaxRulesFromIds(IEnumerable<int> taxRuleIds)
+        {
+            if (taxRuleIds == null) return new ITaxRule[0];
+
+            // throw exception if no TaxRule Id exists or TaxRule cannot be found by that name. (not necessarily here)
+            return TaxRules
+                .Where(t => taxRuleIds.Contains(t.Id))
+                .Select(t => t.TaxRule);
         }
     }
 }

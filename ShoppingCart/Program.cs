@@ -11,8 +11,9 @@ namespace ShoppingCart
     {
         static void Main(string[] args)
         {
-            var shoppingItems = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
-                .Select((item, index) => new DefaultShoppingItem(index, item));
+            // No longer necessary ?
+            //var shoppingItems = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
+            //    .Select((item, index) => new DefaultShoppingItem(index, item, null));
 
             var shoppingBasket = new DefaultBasket();
 
