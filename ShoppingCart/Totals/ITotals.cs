@@ -6,8 +6,9 @@ namespace ShoppingCart.Totals
 {
     public interface ITotals
     {
-        decimal SubTotal { get; }
-        decimal Tax { get; }
-        decimal Total { get; }
+        // Instructions state that none of these should have setters!!!
+        decimal SubTotal { get; set; }
+        decimal Tax { get; set; }
+        decimal Total { get; set; }
     }
 }

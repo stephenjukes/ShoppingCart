@@ -10,8 +10,6 @@ namespace ShoppingCart.ShoppingBasket
         IShoppingBasketItem AddItem(IShoppingItem item);
         IShoppingBasketItem AddItem(IShoppingItem item, int quantity);
         IShoppingBasketItem RemoveItem(IShoppingItem item);
-
-        // INSTRUCTIONS DO NOT ALLOWS SET !!!
         IEnumerable<IShoppingBasketItem> Items { get; }
 
     }
