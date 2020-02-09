@@ -28,7 +28,7 @@ namespace Tests
         [Given(@"a new basket is instantiated")]
         public void WhenANewBasketIsInstantiated()
         {
-            _shoppingBasket = new DefaultBasket();
+            _shoppingBasket = new DefaultBasket(Guid.NewGuid());
             //Probably not necessary now.
             //_shoppingItems = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
             //    .Select((item, index) => new DefaultShoppingItem(index, item));
@@ -179,7 +179,7 @@ namespace Tests
         public void ThenTheBasketHasTheFollowingTotals(Table table)
         {
             var expectedBasketTotals = table.CreateSet<TestTotals>()
-                .Select(row => new DefaultBasket
+                .Select(row => new DefaultBasket(Guid.NewGuid())
                  {
                      SubTotal = row.SubTotal.IntoDecimal(),
                      Tax = row.Tax.IntoDecimal(),
