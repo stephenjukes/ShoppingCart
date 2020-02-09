@@ -1042,7 +1042,7 @@ testRunner.And("the basket has the following totals:", ((string)(null)), table21
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items each with a different tax rule, totals should be correct f" +
                     "or the basket and each item", null, ((string[])(null)));
-#line 154
+#line 152
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -1080,7 +1080,7 @@ this.FeatureBackground();
                             "£1",
                             "2",
                             "2"});
-#line 155
+#line 153
 testRunner.When("the following items are added:", ((string)(null)), table22, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1101,7 +1101,7 @@ testRunner.When("the following items are added:", ((string)(null)), table22, "Wh
                             "£2",
                             "40p",
                             "£2.40"});
-#line 159
+#line 157
 testRunner.Then("the basket contains the following items:", ((string)(null)), table23, "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1112,7 +1112,7 @@ testRunner.Then("the basket contains the following items:", ((string)(null)), ta
                             "£3.50",
                             "40p",
                             "£3.90"});
-#line 163
+#line 161
 testRunner.And("the basket has the following totals:", ((string)(null)), table24, "And ");
 #line hidden
             }
