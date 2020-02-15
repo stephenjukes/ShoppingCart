@@ -3,28 +3,38 @@ using ShoppingCart.Subscriptions.Users;
 using ShoppingCart.Updated;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ShoppingCart.Subscriptions.NotificationTypes
 {
     public class TextNotification : Notification
     {
-        public override Type CommunicationType { get; } = typeof(PhoneNumber);
-
-        protected override string FormatNotification(UserNotification notification)
+        public TextNotification(string communicationChannel) : base(communicationChannel)
         {
-            var lines = new string[] { notification.Summary, notification.Message, notification.Conclusion };
+        }
+
+        public override Type CommunicationType { get; } = typeof(PhoneNumber);
+        protected override int MessageNumber { get; set; }
+
+        protected override string FormatForNotificationSystem(UserNotification notification)
+        {
+            var summary = StringHelpers.Border(70) + notification.Summary + StringHelpers.Border(70);
+            var lines = new string[] {summary, notification.Message, notification.Conclusion };
+
             return String.Join('\n', lines);
         }
 
-        protected override void SendNotification(string message)
+        protected override void SendNotification(string address, string summary, string message)
         {
-            // Implement sending by text
+            Directory.CreateDirectory(_communicationChannel);
 
-            // For now, log to console
+            var phoneNumber = Path.Combine(_communicationChannel, address);
+            File.AppendAllText(phoneNumber, message);
+
             Console.WriteLine(message + '\n');
         }
 
-        public override string ToString() => "text notification";
+        public override string ToString() => "Text";
     }
 }

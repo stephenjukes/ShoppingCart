@@ -2,8 +2,10 @@
 using ShoppingCart.ShoppingItem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Tests.TestModels;
 
 namespace Tests
 {
@@ -28,9 +30,19 @@ namespace Tests
         public static T ToEnum<T>(this string itemName) where T : struct // Is struct correct?
         {
             var isEnum = Enum.TryParse(itemName, true, out T itemEnum);
-            if (!isEnum) throw new ArgumentOutOfRangeException($"Item name {itemName} is not recognised");
+            if (!isEnum) throw new InvalidOperationException($"Item name {itemName} is not recognised");
 
             return itemEnum;
+        }
+
+        public static  IEnumerable<TActual> GetEntitiesFromIds<TTest, TActual>(this IEnumerable<TTest> testEntities, IEnumerable<int> ids)
+            where TTest : TestEntity<TActual>
+        {
+            if (ids == null) return new TActual[0];
+
+            return testEntities
+                .Where(t => ids.Contains(t.Id))
+                .Select(t => (TActual)t.ActualEntity);
         }
     }
 }

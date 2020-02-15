@@ -16,26 +16,28 @@ namespace ShoppingCart
     {
         private static IShoppingBasket _shoppingBasket;
         private static List<Notification> _notificationSystems = new List<Notification>();
-        private static List<User> _users = new List<User>(); 
+        private static List<User> _users = new List<User>();
+        private static string _communicationChannelBasePath = @"..\..\..\CommunicationChannels";
 
         static void Main(string[] args)
         {
-            _shoppingBasket = new DefaultBasket(Guid.NewGuid());
+            _shoppingBasket = new DefaultBasket();
 
             _notificationSystems = new List<Notification>()
             {
-                NotificationFactory.CreateNotificationType<EmailNotification>(),
-                NotificationFactory.CreateNotificationType<TextNotification>()
+                NotificationFactory.CreateNotificationType<EmailNotification>(_communicationChannelBasePath + @"\Emails"),
+                NotificationFactory.CreateNotificationType<TextNotification>(_communicationChannelBasePath + @"\Phones")
             };
 
             _users = new List<User>()
             {
-                new Customer(1, new EmailAddress("john@yahoo.com"), new PhoneNumber("12345678")),
+                new Customer(1, new EmailAddress("john@yahoo.co.uk"), new PhoneNumber("12345678")),
                 new Retailer(2,  new EmailAddress("tesco@org.uk"), new PhoneNumber("87654321"))
             };
 
             SubscribeNotificationSystemsToBasket();
             SubscribeUsersToNotificationSystems();
+            RefreshDirectory(_communicationChannelBasePath, "Emails", "Phones");
 
             var shoppingItem = new DefaultShoppingItem(1, Item.Apples, 1, null);
 
@@ -76,6 +78,7 @@ namespace ShoppingCart
                 foreach (var notificationSystem in _notificationSystems)
                 {
                     var contactDetail = user.ContactDetails.FirstOrDefault(c => c.GetType() == notificationSystem.CommunicationType);
+                    // The Subscribe method should be on the notification system only !!
                     user.Subscribe(notificationSystem, contactDetail);
                 }
             }
