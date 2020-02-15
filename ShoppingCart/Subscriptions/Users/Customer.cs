@@ -14,7 +14,7 @@ namespace ShoppingCart.Subscriptions.Users
         {
         }
 
-        public override UserType Recipient { get; } = UserType.Customer;
+        //public override UserType Recipient { get; } = UserType.Customer;
         public override UserNotificationBuilder UserNotificationBuilder { get; } = UserNotificationBuilders.Customer;
     }
 }

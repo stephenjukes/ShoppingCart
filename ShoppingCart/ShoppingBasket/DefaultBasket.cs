@@ -16,12 +16,6 @@ namespace ShoppingCart.ShoppingBasket
     // DO WE NEED A DESIGN PATTERN WHERE BASKET ITEMS ARE ALWAYS MATCHED TO SHOPPING CARTS?
     public class DefaultBasket : IShoppingBasket
     {
-        public DefaultBasket(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; }
         public IEnumerable<IShoppingBasketItem> Items { get; } = new List<IShoppingBasketItem>();
         // Instructions state that none of these should have setters!!!
         public decimal SubTotal { get; set; }

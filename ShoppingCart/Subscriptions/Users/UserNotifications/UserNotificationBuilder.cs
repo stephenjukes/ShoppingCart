@@ -11,36 +11,42 @@ namespace ShoppingCart.Subscriptions.Users.UserNotifications
     // Consider allowing messages and totals to be part of a list
     public class UserNotificationBuilder
     {
-        
-        private Func<Notification, User, ShoppingUpdatedEventArgs, string> _summary;
-        private Func<ShoppingUpdatedEventArgs, string> _message;
-        private Func<ShoppingUpdatedEventArgs, string> _totals;
-        private string _conclusion;
+        private Func<Notification, User, ShoppingUpdatedEventArgs, NotificationSummary> _summaryFunc;
+        private Func<NotificationSummary, string> _titleFunc;
+        private Func<ShoppingUpdatedEventArgs, string> _messageFunc;
+        private Func<ShoppingUpdatedEventArgs, string> _totalsFunc;
+        private string _conclusionFunc;
         private Notification _notificationType;
         private User _user;
         private ShoppingUpdatedEventArgs _eventArgs;
 
-        public UserNotificationBuilder Summary(Func<Notification, User, ShoppingUpdatedEventArgs , string> summary)
+        public UserNotificationBuilder Summary(Func<Notification, User, ShoppingUpdatedEventArgs, NotificationSummary> summaryFunc)
         {
-            _summary = summary;
+            _summaryFunc = summaryFunc;
             return this;
         }
 
-        public UserNotificationBuilder Message(Func<ShoppingUpdatedEventArgs, string> message)
+        public UserNotificationBuilder Title(Func<NotificationSummary, string> titleFunc)
         {
-            _message = message;
+            _titleFunc = titleFunc;
             return this;
         }
 
-        public UserNotificationBuilder Totals(Func<ShoppingUpdatedEventArgs, string> totals)
+        public UserNotificationBuilder Message(Func<ShoppingUpdatedEventArgs, string> messageFunc)
         {
-            _totals = totals;
+            _messageFunc = messageFunc;
             return this;
         }
 
-        public UserNotificationBuilder Conclusion(string conclusion)
+        public UserNotificationBuilder Totals(Func<ShoppingUpdatedEventArgs, string> totalsFunc)
         {
-            _conclusion = conclusion;
+            _totalsFunc = totalsFunc;
+            return this;
+        }
+
+        public UserNotificationBuilder Conclusion(string conclusionFunc)
+        {
+            _conclusionFunc = conclusionFunc;
             return this;
         }
 
@@ -64,11 +70,14 @@ namespace ShoppingCart.Subscriptions.Users.UserNotifications
 
         public UserNotification Build()
         {
+            var summary = _summaryFunc(_notificationType, _user, _eventArgs);
+
             return new UserNotification(
-                _summary(_notificationType, _user, _eventArgs),
-                _message(_eventArgs),
-                _totals(_eventArgs),
-                _conclusion
+                summary,
+                _titleFunc(summary),
+                _messageFunc(_eventArgs),
+                _totalsFunc(_eventArgs),
+                _conclusionFunc
             );
         }
     }

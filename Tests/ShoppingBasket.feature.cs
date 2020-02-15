@@ -80,6 +80,15 @@ namespace Tests
         {
 #line 14
 #line hidden
+#line 16
+testRunner.Given("the basket database is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 17
+testRunner.And("there are no user subscribers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 18
+testRunner.And("a new basket is instantiated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Id",
                         "RuleName"});
@@ -95,11 +104,62 @@ namespace Tests
             table1.AddRow(new string[] {
                         "4",
                         "BandedTax2020"});
-#line 15
-testRunner.Given("the following tax rules:", ((string)(null)), table1, "Given ");
+#line 19
+testRunner.And("the following tax rules:", ((string)(null)), table1, "And ");
 #line hidden
-#line 23
-testRunner.And("a new basket is instantiated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "NotificationSystemName",
+                        "CommunicationType",
+                        "CommunicationChannel"});
+            table2.AddRow(new string[] {
+                        "1",
+                        "EmailNotification",
+                        "email",
+                        "..\\..\\..\\..Emails"});
+            table2.AddRow(new string[] {
+                        "2",
+                        "TextNotification",
+                        "text",
+                        "..\\..\\..\\..Phones"});
+#line 25
+testRunner.And("the following notification systems", ((string)(null)), table2, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "UserType",
+                        "Email",
+                        "PhoneNumber"});
+            table3.AddRow(new string[] {
+                        "1",
+                        "Customer",
+                        "albert@hotmail.co.uk",
+                        "23855638"});
+            table3.AddRow(new string[] {
+                        "2",
+                        "Retailer",
+                        "belle@yahoo.co.uk",
+                        "86120183"});
+            table3.AddRow(new string[] {
+                        "3",
+                        "Customer",
+                        "charlie@gmail.co.uk",
+                        "41843576"});
+            table3.AddRow(new string[] {
+                        "4",
+                        "Retailer",
+                        "diana@outlook.co.uk",
+                        "03110894"});
+            table3.AddRow(new string[] {
+                        "5",
+                        "Customer",
+                        "edward@aol.co.uk",
+                        "84315325"});
+#line 29
+testRunner.And("the following users", ((string)(null)), table3, "And ");
+#line hidden
+#line 36
+testRunner.And("all notification systems subscribe to the basket", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -115,7 +175,7 @@ testRunner.And("a new basket is instantiated", ((string)(null)), ((TechTalk.Spec
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A newly constructed basket has zero items", null, ((string[])(null)));
-#line 27
+#line 40
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -138,7 +198,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
 this.FeatureBackground();
 #line hidden
-#line 28
+#line 41
 testRunner.Then("the basket has 0 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -152,7 +212,7 @@ testRunner.Then("the basket has 0 items", ((string)(null)), ((TechTalk.SpecFlow.
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The totals of a newly constructed basket are all zero", null, ((string[])(null)));
-#line 30
+#line 43
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -175,7 +235,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
 this.FeatureBackground();
 #line hidden
-#line 31
+#line 44
 testRunner.Then("all totals are 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -192,122 +252,6 @@ testRunner.Then("all totals are 0", ((string)(null)), ((TechTalk.SpecFlow.Table)
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding an item without an explicit quantity results in a quantity of 1 for the it" +
                     "em", null, ((string[])(null)));
-#line 37
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 14
-this.FeatureBackground();
-#line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Id",
-                            "Name",
-                            "UnitPrice",
-                            "Quantity",
-                            "TaxRules"});
-                table2.AddRow(new string[] {
-                            "1",
-                            "pasta",
-                            "",
-                            "",
-                            ""});
-#line 38
-testRunner.When("the following items are added:", ((string)(null)), table2, "When ");
-#line hidden
-#line 41
-testRunner.Then("the basket has 1 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 42
-testRunner.And("the item \'pasta\' has a quantity of 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item to an empty basket, both the basket and item quantity " +
-            "are 1")]
-        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding a single item to an empty basket, both the basket and item quantity " +
-            "are 1")]
-        public virtual void AfterAddingASingleItemToAnEmptyBasketBothTheBasketAndItemQuantityAre1()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item to an empty basket, both the basket and item quantity " +
-                    "are 1", null, ((string[])(null)));
-#line 45
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 14
-this.FeatureBackground();
-#line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Id",
-                            "Name",
-                            "UnitPrice",
-                            "Quantity",
-                            "TaxRules"});
-                table3.AddRow(new string[] {
-                            "1",
-                            "rice",
-                            "",
-                            "1",
-                            ""});
-#line 46
-testRunner.When("the following items are added:", ((string)(null)), table3, "When ");
-#line hidden
-#line 49
-testRunner.Then("the basket has 1 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 50
-testRunner.And("the item \'rice\' has a quantity of 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="After adding two items with different quantities to an empty basket, both the bas" +
-            "ket and item quantities are correct")]
-        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding two items with different quantities to an empty basket, both the bas" +
-            "ket and item quantities are correct")]
-        public virtual void AfterAddingTwoItemsWithDifferentQuantitiesToAnEmptyBasketBothTheBasketAndItemQuantitiesAreCorrect()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items with different quantities to an empty basket, both the bas" +
-                    "ket and item quantities are correct", null, ((string[])(null)));
 #line 52
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -339,43 +283,34 @@ this.FeatureBackground();
                             "TaxRules"});
                 table4.AddRow(new string[] {
                             "1",
-                            "bread",
+                            "pasta",
                             "",
-                            "3",
-                            ""});
-                table4.AddRow(new string[] {
-                            "2",
-                            "flour",
                             "",
-                            "5",
                             ""});
 #line 53
 testRunner.When("the following items are added:", ((string)(null)), table4, "When ");
 #line hidden
+#line 56
+testRunner.Then("the basket has 1 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
 #line 57
-testRunner.Then("the basket has 2 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 58
-testRunner.And("the item \'bread\' has a quantity of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 59
-testRunner.And("the item \'flour\' has a quantity of 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.And("the item \'pasta\' has a quantity of 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item to the basket, adding the same item again will update " +
-            "the quantity of the previously added item")]
+        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item to an empty basket, both the basket and item quantity " +
+            "are 1")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding a single item to the basket, adding the same item again will update " +
-            "the quantity of the previously added item")]
-        public virtual void AfterAddingASingleItemToTheBasketAddingTheSameItemAgainWillUpdateTheQuantityOfThePreviouslyAddedItem()
+        [Xunit.TraitAttribute("Description", "After adding a single item to an empty basket, both the basket and item quantity " +
+            "are 1")]
+        public virtual void AfterAddingASingleItemToAnEmptyBasketBothTheBasketAndItemQuantityAre1()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item to the basket, adding the same item again will update " +
-                    "the quantity of the previously added item", null, ((string[])(null)));
-#line 62
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item to an empty basket, both the basket and item quantity " +
+                    "are 1", null, ((string[])(null)));
+#line 60
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -406,40 +341,34 @@ this.FeatureBackground();
                             "TaxRules"});
                 table5.AddRow(new string[] {
                             "1",
-                            "butter",
+                            "rice",
                             "",
-                            "4",
-                            ""});
-                table5.AddRow(new string[] {
                             "1",
-                            "butter",
-                            "",
-                            "2",
                             ""});
-#line 63
+#line 61
 testRunner.When("the following items are added:", ((string)(null)), table5, "When ");
 #line hidden
-#line 67
+#line 64
 testRunner.Then("the basket has 1 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 68
-testRunner.And("the item \'butter\' has a quantity of 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 65
+testRunner.And("the item \'rice\' has a quantity of 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Adding an item with, or updating an item to a quantity of 0 or less will result i" +
-            "n an ArgumentOutOfRangeException being thrown")]
+        [Xunit.SkippableFactAttribute(DisplayName="After adding two items with different quantities to an empty basket, both the bas" +
+            "ket and item quantities are correct")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "Adding an item with, or updating an item to a quantity of 0 or less will result i" +
-            "n an ArgumentOutOfRangeException being thrown")]
-        public virtual void AddingAnItemWithOrUpdatingAnItemToAQuantityOf0OrLessWillResultInAnArgumentOutOfRangeExceptionBeingThrown()
+        [Xunit.TraitAttribute("Description", "After adding two items with different quantities to an empty basket, both the bas" +
+            "ket and item quantities are correct")]
+        public virtual void AfterAddingTwoItemsWithDifferentQuantitiesToAnEmptyBasketBothTheBasketAndItemQuantitiesAreCorrect()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding an item with, or updating an item to a quantity of 0 or less will result i" +
-                    "n an ArgumentOutOfRangeException being thrown", null, ((string[])(null)));
-#line 74
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items with different quantities to an empty basket, both the bas" +
+                    "ket and item quantities are correct", null, ((string[])(null)));
+#line 67
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -470,31 +399,43 @@ this.FeatureBackground();
                             "TaxRules"});
                 table6.AddRow(new string[] {
                             "1",
-                            "eggs",
+                            "bread",
                             "",
-                            "0",
+                            "3",
                             ""});
-#line 75
+                table6.AddRow(new string[] {
+                            "2",
+                            "flour",
+                            "",
+                            "5",
+                            ""});
+#line 68
 testRunner.When("the following items are added:", ((string)(null)), table6, "When ");
 #line hidden
-#line 78
-testRunner.Then("A \'ArgumentOutOfRangeException\' exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 72
+testRunner.Then("the basket has 2 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 73
+testRunner.And("the item \'bread\' has a quantity of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 74
+testRunner.And("the item \'flour\' has a quantity of 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeE" +
-            "xception being thrown")]
+        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item to the basket, adding the same item again will update " +
+            "the quantity of the previously added item")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "Updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeE" +
-            "xception being thrown")]
-        public virtual void UpdatingAnItemToAQuantityOf0OrLessWillResultInAnArgumentOutOfRangeExceptionBeingThrown()
+        [Xunit.TraitAttribute("Description", "After adding a single item to the basket, adding the same item again will update " +
+            "the quantity of the previously added item")]
+        public virtual void AfterAddingASingleItemToTheBasketAddingTheSameItemAgainWillUpdateTheQuantityOfThePreviouslyAddedItem()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeE" +
-                    "xception being thrown", null, ((string[])(null)));
-#line 81
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item to the basket, adding the same item again will update " +
+                    "the quantity of the previously added item", null, ((string[])(null)));
+#line 77
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -525,37 +466,40 @@ this.FeatureBackground();
                             "TaxRules"});
                 table7.AddRow(new string[] {
                             "1",
-                            "cerial",
+                            "butter",
                             "",
-                            "1",
+                            "4",
                             ""});
                 table7.AddRow(new string[] {
                             "1",
-                            "cerial",
+                            "butter",
                             "",
-                            "-1",
+                            "2",
                             ""});
-#line 82
+#line 78
 testRunner.When("the following items are added:", ((string)(null)), table7, "When ");
 #line hidden
-#line 86
-testRunner.Then("A \'ArgumentOutOfRangeException\' exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 82
+testRunner.Then("the basket has 1 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 83
+testRunner.And("the item \'butter\' has a quantity of 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item to an empty basket, both the subtotal of the item and " +
-            "basket should equal the items unit price")]
+        [Xunit.SkippableFactAttribute(DisplayName="Adding an item with, or updating an item to a quantity of 0 or less will result i" +
+            "n an ArgumentOutOfRangeException being thrown")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding a single item to an empty basket, both the subtotal of the item and " +
-            "basket should equal the items unit price")]
-        public virtual void AfterAddingASingleItemToAnEmptyBasketBothTheSubtotalOfTheItemAndBasketShouldEqualTheItemsUnitPrice()
+        [Xunit.TraitAttribute("Description", "Adding an item with, or updating an item to a quantity of 0 or less will result i" +
+            "n an ArgumentOutOfRangeException being thrown")]
+        public virtual void AddingAnItemWithOrUpdatingAnItemToAQuantityOf0OrLessWillResultInAnArgumentOutOfRangeExceptionBeingThrown()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item to an empty basket, both the subtotal of the item and " +
-                    "basket should equal the items unit price", null, ((string[])(null)));
-#line 90
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding an item with, or updating an item to a quantity of 0 or less will result i" +
+                    "n an ArgumentOutOfRangeException being thrown", null, ((string[])(null)));
+#line 89
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -586,34 +530,32 @@ this.FeatureBackground();
                             "TaxRules"});
                 table8.AddRow(new string[] {
                             "1",
-                            "pasta",
-                            "£1.23",
+                            "eggs",
                             "",
+                            "0",
                             ""});
-#line 91
+#line 90
 testRunner.When("the following items are added:", ((string)(null)), table8, "When ");
 #line hidden
-#line 94
-testRunner.Then("the item \'pasta\' has a subtotal of \'£1.23\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 93
+testRunner.Then("A \'ArgumentOutOfRangeException\' exception is thrown with message \'Item quantity c" +
+                        "annot be less than 1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item (with a NoTax rule) to an empty basket, both the tax o" +
-            "f the item and the basket should equal 0 and both the subtotal of the item and b" +
-            "asket should equal the items unit price")]
+        [Xunit.SkippableFactAttribute(DisplayName="Updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeE" +
+            "xception being thrown")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding a single item (with a NoTax rule) to an empty basket, both the tax o" +
-            "f the item and the basket should equal 0 and both the subtotal of the item and b" +
-            "asket should equal the items unit price")]
-        public virtual void AfterAddingASingleItemWithANoTaxRuleToAnEmptyBasketBothTheTaxOfTheItemAndTheBasketShouldEqual0AndBothTheSubtotalOfTheItemAndBasketShouldEqualTheItemsUnitPrice()
+        [Xunit.TraitAttribute("Description", "Updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeE" +
+            "xception being thrown")]
+        public virtual void UpdatingAnItemToAQuantityOf0OrLessWillResultInAnArgumentOutOfRangeExceptionBeingThrown()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item (with a NoTax rule) to an empty basket, both the tax o" +
-                    "f the item and the basket should equal 0 and both the subtotal of the item and b" +
-                    "asket should equal the items unit price", null, ((string[])(null)));
-#line 99
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeE" +
+                    "xception being thrown", null, ((string[])(null)));
+#line 96
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -639,47 +581,101 @@ this.FeatureBackground();
                 TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "Id",
                             "Name",
-                            "Quantity",
                             "UnitPrice",
-                            "TaxRuleIds"});
+                            "Quantity",
+                            "TaxRules"});
                 table9.AddRow(new string[] {
                             "1",
-                            "pasta",
+                            "cerial",
                             "",
-                            "£1.23",
-                            "1"});
-#line 100
+                            "1",
+                            ""});
+                table9.AddRow(new string[] {
+                            "1",
+                            "cerial",
+                            "",
+                            "-1",
+                            ""});
+#line 97
 testRunner.When("the following items are added:", ((string)(null)), table9, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Id",
-                            "Name",
-                            "Quantity",
-                            "SubTotal",
-                            "Tax",
-                            "Total"});
-                table10.AddRow(new string[] {
-                            "1",
-                            "pasta",
-                            "1",
-                            "£1.23",
-                            "0",
-                            "£1.23"});
-#line 103
-testRunner.Then("the basket contains the following items:", ((string)(null)), table10, "Then ");
+#line 101
+testRunner.Then("A \'ArgumentOutOfRangeException\' exception is thrown with message \'Item quantity c" +
+                        "annot be less than 1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="A percentage tax rule returns the correct totals for the basket and each item")]
+        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item to an empty basket, both the subtotal of the item and " +
+            "basket should equal the items unit price")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "A percentage tax rule returns the correct totals for the basket and each item")]
-        public virtual void APercentageTaxRuleReturnsTheCorrectTotalsForTheBasketAndEachItem()
+        [Xunit.TraitAttribute("Description", "After adding a single item to an empty basket, both the subtotal of the item and " +
+            "basket should equal the items unit price")]
+        public virtual void AfterAddingASingleItemToAnEmptyBasketBothTheSubtotalOfTheItemAndBasketShouldEqualTheItemsUnitPrice()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A percentage tax rule returns the correct totals for the basket and each item", null, ((string[])(null)));
-#line 107
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item to an empty basket, both the subtotal of the item and " +
+                    "basket should equal the items unit price", null, ((string[])(null)));
+#line 105
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Name",
+                            "UnitPrice",
+                            "Quantity",
+                            "TaxRules"});
+                table10.AddRow(new string[] {
+                            "1",
+                            "pasta",
+                            "£1.23",
+                            "",
+                            ""});
+#line 106
+testRunner.When("the following items are added:", ((string)(null)), table10, "When ");
+#line hidden
+#line 109
+testRunner.Then("the item \'pasta\' has a subtotal of \'£1.23\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="After adding a single item (with a NoTax rule) to an empty basket, both the tax o" +
+            "f the item and the basket should equal 0 and both the subtotal of the item and b" +
+            "asket should equal the items unit price")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "After adding a single item (with a NoTax rule) to an empty basket, both the tax o" +
+            "f the item and the basket should equal 0 and both the subtotal of the item and b" +
+            "asket should equal the items unit price")]
+        public virtual void AfterAddingASingleItemWithANoTaxRuleToAnEmptyBasketBothTheTaxOfTheItemAndTheBasketShouldEqual0AndBothTheSubtotalOfTheItemAndBasketShouldEqualTheItemsUnitPrice()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding a single item (with a NoTax rule) to an empty basket, both the tax o" +
+                    "f the item and the basket should equal 0 and both the subtotal of the item and b" +
+                    "asket should equal the items unit price", null, ((string[])(null)));
+#line 114
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -710,11 +706,11 @@ this.FeatureBackground();
                             "TaxRuleIds"});
                 table11.AddRow(new string[] {
                             "1",
-                            "XBox",
+                            "pasta",
                             "",
-                            "£200",
-                            "2"});
-#line 108
+                            "£1.23",
+                            "1"});
+#line 115
 testRunner.When("the following items are added:", ((string)(null)), table11, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -726,29 +722,26 @@ testRunner.When("the following items are added:", ((string)(null)), table11, "Wh
                             "Total"});
                 table12.AddRow(new string[] {
                             "1",
-                            "XBox",
+                            "pasta",
                             "1",
-                            "£200",
-                            "£40",
-                            "£240"});
-#line 111
+                            "£1.23",
+                            "0",
+                            "£1.23"});
+#line 118
 testRunner.Then("the basket contains the following items:", ((string)(null)), table12, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="A flat administration tax rule returns the correct totals for the basket and each" +
-            " item")]
+        [Xunit.SkippableFactAttribute(DisplayName="A percentage tax rule returns the correct totals for the basket and each item")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "A flat administration tax rule returns the correct totals for the basket and each" +
-            " item")]
-        public virtual void AFlatAdministrationTaxRuleReturnsTheCorrectTotalsForTheBasketAndEachItem()
+        [Xunit.TraitAttribute("Description", "A percentage tax rule returns the correct totals for the basket and each item")]
+        public virtual void APercentageTaxRuleReturnsTheCorrectTotalsForTheBasketAndEachItem()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A flat administration tax rule returns the correct totals for the basket and each" +
-                    " item", null, ((string[])(null)));
-#line 115
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A percentage tax rule returns the correct totals for the basket and each item", null, ((string[])(null)));
+#line 122
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -782,8 +775,8 @@ this.FeatureBackground();
                             "XBox",
                             "",
                             "£200",
-                            "3"});
-#line 116
+                            "2"});
+#line 123
 testRunner.When("the following items are added:", ((string)(null)), table13, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -798,23 +791,26 @@ testRunner.When("the following items are added:", ((string)(null)), table13, "Wh
                             "XBox",
                             "1",
                             "£200",
-                            "£5",
-                            "£205"});
-#line 119
+                            "£40",
+                            "£240"});
+#line 126
 testRunner.Then("the basket contains the following items:", ((string)(null)), table14, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="A banded tax rule returns the correct totals for the basket and each item")]
+        [Xunit.SkippableFactAttribute(DisplayName="A flat administration tax rule returns the correct totals for the basket and each" +
+            " item")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "A banded tax rule returns the correct totals for the basket and each item")]
-        public virtual void ABandedTaxRuleReturnsTheCorrectTotalsForTheBasketAndEachItem()
+        [Xunit.TraitAttribute("Description", "A flat administration tax rule returns the correct totals for the basket and each" +
+            " item")]
+        public virtual void AFlatAdministrationTaxRuleReturnsTheCorrectTotalsForTheBasketAndEachItem()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A banded tax rule returns the correct totals for the basket and each item", null, ((string[])(null)));
-#line 123
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A flat administration tax rule returns the correct totals for the basket and each" +
+                    " item", null, ((string[])(null)));
+#line 130
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -848,8 +844,8 @@ this.FeatureBackground();
                             "XBox",
                             "",
                             "£200",
-                            "4"});
-#line 124
+                            "3"});
+#line 131
 testRunner.When("the following items are added:", ((string)(null)), table15, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -864,26 +860,23 @@ testRunner.When("the following items are added:", ((string)(null)), table15, "Wh
                             "XBox",
                             "1",
                             "£200",
-                            "£25",
-                            "£225"});
-#line 127
+                            "£5",
+                            "£205"});
+#line 134
 testRunner.Then("the basket contains the following items:", ((string)(null)), table16, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="An item with multiple tax rules returns the correct totals for the basket and eac" +
-            "h item")]
+        [Xunit.SkippableFactAttribute(DisplayName="A banded tax rule returns the correct totals for the basket and each item")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "An item with multiple tax rules returns the correct totals for the basket and eac" +
-            "h item")]
-        public virtual void AnItemWithMultipleTaxRulesReturnsTheCorrectTotalsForTheBasketAndEachItem()
+        [Xunit.TraitAttribute("Description", "A banded tax rule returns the correct totals for the basket and each item")]
+        public virtual void ABandedTaxRuleReturnsTheCorrectTotalsForTheBasketAndEachItem()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An item with multiple tax rules returns the correct totals for the basket and eac" +
-                    "h item", null, ((string[])(null)));
-#line 131
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A banded tax rule returns the correct totals for the basket and each item", null, ((string[])(null)));
+#line 138
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -917,8 +910,8 @@ this.FeatureBackground();
                             "XBox",
                             "",
                             "£200",
-                            "2,3"});
-#line 132
+                            "4"});
+#line 139
 testRunner.When("the following items are added:", ((string)(null)), table17, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -933,29 +926,26 @@ testRunner.When("the following items are added:", ((string)(null)), table17, "Wh
                             "XBox",
                             "1",
                             "£200",
-                            "£45",
-                            "£245"});
-#line 135
+                            "£25",
+                            "£225"});
+#line 142
 testRunner.Then("the basket contains the following items:", ((string)(null)), table18, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="After adding two items with different quantities (both with a NoTax rule) to an e" +
-            "mpty basket, both the tax of the item and the basket should equal 0, both the su" +
-            "btotal and the total of the item and basket should equal the items unit price")]
+        [Xunit.SkippableFactAttribute(DisplayName="An item with multiple tax rules returns the correct totals for the basket and eac" +
+            "h item")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding two items with different quantities (both with a NoTax rule) to an e" +
-            "mpty basket, both the tax of the item and the basket should equal 0, both the su" +
-            "btotal and the total of the item and basket should equal the items unit price")]
-        public virtual void AfterAddingTwoItemsWithDifferentQuantitiesBothWithANoTaxRuleToAnEmptyBasketBothTheTaxOfTheItemAndTheBasketShouldEqual0BothTheSubtotalAndTheTotalOfTheItemAndBasketShouldEqualTheItemsUnitPrice()
+        [Xunit.TraitAttribute("Description", "An item with multiple tax rules returns the correct totals for the basket and eac" +
+            "h item")]
+        public virtual void AnItemWithMultipleTaxRulesReturnsTheCorrectTotalsForTheBasketAndEachItem()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items with different quantities (both with a NoTax rule) to an e" +
-                    "mpty basket, both the tax of the item and the basket should equal 0, both the su" +
-                    "btotal and the total of the item and basket should equal the items unit price", null, ((string[])(null)));
-#line 139
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An item with multiple tax rules returns the correct totals for the basket and eac" +
+                    "h item", null, ((string[])(null)));
+#line 146
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -979,70 +969,55 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
                             "Name",
-                            "UnitPrice",
                             "Quantity",
+                            "UnitPrice",
                             "TaxRuleIds"});
                 table19.AddRow(new string[] {
-                            "pasta",
-                            "50p",
-                            "3",
-                            "1"});
-                table19.AddRow(new string[] {
-                            "rice",
-                            "£1",
-                            "2",
-                            "1"});
-#line 140
+                            "1",
+                            "XBox",
+                            "",
+                            "£200",
+                            "2,3"});
+#line 147
 testRunner.When("the following items are added:", ((string)(null)), table19, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
                             "Name",
                             "Quantity",
                             "SubTotal",
                             "Tax",
                             "Total"});
                 table20.AddRow(new string[] {
-                            "pasta",
-                            "3",
-                            "£1.50",
-                            "0",
-                            "£1.50"});
-                table20.AddRow(new string[] {
-                            "rice",
-                            "2",
-                            "£2",
-                            "0",
-                            "£2"});
-#line 144
+                            "1",
+                            "XBox",
+                            "1",
+                            "£200",
+                            "£45",
+                            "£245"});
+#line 150
 testRunner.Then("the basket contains the following items:", ((string)(null)), table20, "Then ");
-#line hidden
-                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
-                            "SubTotal",
-                            "Tax",
-                            "Total"});
-                table21.AddRow(new string[] {
-                            "£3.50",
-                            "0",
-                            "£3.50"});
-#line 148
-testRunner.And("the basket has the following totals:", ((string)(null)), table21, "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="After adding two items each with a different tax rule, totals should be correct f" +
-            "or the basket and each item")]
+        [Xunit.SkippableFactAttribute(DisplayName="After adding two items with different quantities (both with a NoTax rule) to an e" +
+            "mpty basket, both the tax of the item and the basket should equal 0, both the su" +
+            "btotal and the total of the item and basket should equal the items unit price")]
         [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
-        [Xunit.TraitAttribute("Description", "After adding two items each with a different tax rule, totals should be correct f" +
-            "or the basket and each item")]
-        public virtual void AfterAddingTwoItemsEachWithADifferentTaxRuleTotalsShouldBeCorrectForTheBasketAndEachItem()
+        [Xunit.TraitAttribute("Description", "After adding two items with different quantities (both with a NoTax rule) to an e" +
+            "mpty basket, both the tax of the item and the basket should equal 0, both the su" +
+            "btotal and the total of the item and basket should equal the items unit price")]
+        public virtual void AfterAddingTwoItemsWithDifferentQuantitiesBothWithANoTaxRuleToAnEmptyBasketBothTheTaxOfTheItemAndTheBasketShouldEqual0BothTheSubtotalAndTheTotalOfTheItemAndBasketShouldEqualTheItemsUnitPrice()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items each with a different tax rule, totals should be correct f" +
-                    "or the basket and each item", null, ((string[])(null)));
-#line 152
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items with different quantities (both with a NoTax rule) to an e" +
+                    "mpty basket, both the tax of the item and the basket should equal 0, both the su" +
+                    "btotal and the total of the item and basket should equal the items unit price", null, ((string[])(null)));
+#line 154
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -1065,55 +1040,597 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "UnitPrice",
                             "Quantity",
                             "TaxRuleIds"});
-                table22.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "pasta",
                             "50p",
                             "3",
                             "1"});
-                table22.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "rice",
                             "£1",
                             "2",
-                            "2"});
-#line 153
-testRunner.When("the following items are added:", ((string)(null)), table22, "When ");
+                            "1"});
+#line 155
+testRunner.When("the following items are added:", ((string)(null)), table21, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Quantity",
                             "SubTotal",
                             "Tax",
                             "Total"});
-                table23.AddRow(new string[] {
+                table22.AddRow(new string[] {
                             "pasta",
                             "3",
                             "£1.50",
                             "0",
                             "£1.50"});
+                table22.AddRow(new string[] {
+                            "rice",
+                            "2",
+                            "£2",
+                            "0",
+                            "£2"});
+#line 159
+testRunner.Then("the basket contains the following items:", ((string)(null)), table22, "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                            "SubTotal",
+                            "Tax",
+                            "Total"});
                 table23.AddRow(new string[] {
+                            "£3.50",
+                            "0",
+                            "£3.50"});
+#line 163
+testRunner.And("the basket has the following totals:", ((string)(null)), table23, "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="After adding two items each with a different tax rule, totals should be correct f" +
+            "or the basket and each item")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "After adding two items each with a different tax rule, totals should be correct f" +
+            "or the basket and each item")]
+        public virtual void AfterAddingTwoItemsEachWithADifferentTaxRuleTotalsShouldBeCorrectForTheBasketAndEachItem()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After adding two items each with a different tax rule, totals should be correct f" +
+                    "or the basket and each item", null, ((string[])(null)));
+#line 167
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "UnitPrice",
+                            "Quantity",
+                            "TaxRuleIds"});
+                table24.AddRow(new string[] {
+                            "pasta",
+                            "50p",
+                            "3",
+                            "1"});
+                table24.AddRow(new string[] {
+                            "rice",
+                            "£1",
+                            "2",
+                            "2"});
+#line 168
+testRunner.When("the following items are added:", ((string)(null)), table24, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Quantity",
+                            "SubTotal",
+                            "Tax",
+                            "Total"});
+                table25.AddRow(new string[] {
+                            "pasta",
+                            "3",
+                            "£1.50",
+                            "0",
+                            "£1.50"});
+                table25.AddRow(new string[] {
                             "rice",
                             "2",
                             "£2",
                             "40p",
                             "£2.40"});
-#line 157
-testRunner.Then("the basket contains the following items:", ((string)(null)), table23, "Then ");
+#line 172
+testRunner.Then("the basket contains the following items:", ((string)(null)), table25, "Then ");
 #line hidden
-                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                             "SubTotal",
                             "Tax",
                             "Total"});
-                table24.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "£3.50",
                             "40p",
                             "£3.90"});
-#line 161
-testRunner.And("the basket has the following totals:", ((string)(null)), table24, "And ");
+#line 176
+testRunner.And("the basket has the following totals:", ((string)(null)), table26, "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Email notifications are sent correctly when items are added and removed")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "Email notifications are sent correctly when items are added and removed")]
+        public virtual void EmailNotificationsAreSentCorrectlyWhenItemsAreAddedAndRemoved()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Email notifications are sent correctly when items are added and removed", null, ((string[])(null)));
+#line 183
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "CommunicationTypes"});
+                table27.AddRow(new string[] {
+                            "1",
+                            "email"});
+#line 184
+testRunner.When("the users subscribe as follows for the communication types:", ((string)(null)), table27, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Name",
+                            "UnitPrice",
+                            "Quantity",
+                            "TaxRules"});
+                table28.AddRow(new string[] {
+                            "1",
+                            "pasta",
+                            "",
+                            "",
+                            ""});
+#line 187
+testRunner.And("the following items are added:", ((string)(null)), table28, "And ");
+#line hidden
+#line 190
+testRunner.And("items \'1\' are removed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "UserType",
+                            "CommunicationType",
+                            "Publisher",
+                            "UpdateType"});
+                table29.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "email",
+                            "basket",
+                            "add"});
+                table29.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "email",
+                            "item",
+                            "add"});
+                table29.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "email",
+                            "basket",
+                            "remove"});
+                table29.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "email",
+                            "item",
+                            "remove"});
+#line 191
+testRunner.Then("only the following notifications are received", ((string)(null)), table29, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Text notifications are sent correctly when items are added and removed")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "Text notifications are sent correctly when items are added and removed")]
+        public virtual void TextNotificationsAreSentCorrectlyWhenItemsAreAddedAndRemoved()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Text notifications are sent correctly when items are added and removed", null, ((string[])(null)));
+#line 198
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "CommunicationTypes"});
+                table30.AddRow(new string[] {
+                            "2",
+                            "text"});
+#line 199
+testRunner.When("the users subscribe as follows for the communication types:", ((string)(null)), table30, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Name",
+                            "UnitPrice",
+                            "Quantity",
+                            "TaxRules"});
+                table31.AddRow(new string[] {
+                            "1",
+                            "pasta",
+                            "",
+                            "",
+                            ""});
+#line 202
+testRunner.And("the following items are added:", ((string)(null)), table31, "And ");
+#line hidden
+#line 205
+testRunner.And("items \'1\' are removed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "UserType",
+                            "CommunicationType",
+                            "Publisher",
+                            "UpdateType"});
+                table32.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "text",
+                            "basket",
+                            "add"});
+                table32.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "text",
+                            "item",
+                            "add"});
+                table32.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "text",
+                            "basket",
+                            "remove"});
+                table32.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "text",
+                            "item",
+                            "remove"});
+#line 206
+testRunner.Then("only the following notifications are received", ((string)(null)), table32, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="No notifications are sent on the attempted removal of a non existant item")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "No notifications are sent on the attempted removal of a non existant item")]
+        public virtual void NoNotificationsAreSentOnTheAttemptedRemovalOfANonExistantItem()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No notifications are sent on the attempted removal of a non existant item", null, ((string[])(null)));
+#line 214
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "CommunicationTypes"});
+                table33.AddRow(new string[] {
+                            "3",
+                            "email, text"});
+#line 215
+testRunner.When("the users subscribe as follows for the communication types:", ((string)(null)), table33, "When ");
+#line hidden
+#line 218
+testRunner.And("items \'1\' are removed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 220
+testRunner.Then("no notifications are received.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="No notifications are sent on the attempted addition using an invalid quantity")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "No notifications are sent on the attempted addition using an invalid quantity")]
+        public virtual void NoNotificationsAreSentOnTheAttemptedAdditionUsingAnInvalidQuantity()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No notifications are sent on the attempted addition using an invalid quantity", null, ((string[])(null)));
+#line 222
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "CommunicationTypes"});
+                table34.AddRow(new string[] {
+                            "1",
+                            "email"});
+#line 223
+testRunner.When("the users subscribe as follows for the communication types:", ((string)(null)), table34, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Name",
+                            "UnitPrice",
+                            "Quantity",
+                            "TaxRules"});
+                table35.AddRow(new string[] {
+                            "1",
+                            "eggs",
+                            "",
+                            "0",
+                            ""});
+                table35.AddRow(new string[] {
+                            "2",
+                            "cerial",
+                            "",
+                            "-1",
+                            ""});
+#line 226
+testRunner.And("the following items are added:", ((string)(null)), table35, "And ");
+#line hidden
+#line 230
+testRunner.Then("no notifications are received.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="All notifications are sent correctly for a variety of users and subscriptions")]
+        [Xunit.TraitAttribute("FeatureTitle", "ShoppingBasket")]
+        [Xunit.TraitAttribute("Description", "All notifications are sent correctly for a variety of users and subscriptions")]
+        public virtual void AllNotificationsAreSentCorrectlyForAVarietyOfUsersAndSubscriptions()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("All notifications are sent correctly for a variety of users and subscriptions", null, ((string[])(null)));
+#line 233
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "CommunicationTypes"});
+                table36.AddRow(new string[] {
+                            "1",
+                            "email, text"});
+                table36.AddRow(new string[] {
+                            "2",
+                            "email, text"});
+                table36.AddRow(new string[] {
+                            "3",
+                            "email"});
+                table36.AddRow(new string[] {
+                            "4",
+                            "text"});
+                table36.AddRow(new string[] {
+                            "5",
+                            ""});
+#line 234
+testRunner.When("the users subscribe as follows for the communication types:", ((string)(null)), table36, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Name",
+                            "UnitPrice",
+                            "Quantity",
+                            "TaxRules"});
+                table37.AddRow(new string[] {
+                            "1",
+                            "pasta",
+                            "",
+                            "",
+                            ""});
+#line 243
+testRunner.When("the following items are added:", ((string)(null)), table37, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
+                            "UserId",
+                            "UserType",
+                            "CommunicationType",
+                            "Publisher",
+                            "UpdateType"});
+                table38.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "email",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "email",
+                            "item",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "email",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "email",
+                            "item",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "3",
+                            "Customer",
+                            "email",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "3",
+                            "Customer",
+                            "email",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "text",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "1",
+                            "Customer",
+                            "text",
+                            "item",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "text",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "2",
+                            "Retailer",
+                            "text",
+                            "item",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "4",
+                            "Retailer",
+                            "text",
+                            "basket",
+                            "add"});
+                table38.AddRow(new string[] {
+                            "4",
+                            "Retailer",
+                            "text",
+                            "basket",
+                            "add"});
+#line 246
+testRunner.Then("only the following notifications are received", ((string)(null)), table38, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

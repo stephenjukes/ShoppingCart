@@ -9,9 +9,9 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
     {
         public static List<Notification> NotificationTypes { get; } = new List<Notification>();
 
-        public static TNotification CreateNotificationType<TNotification>() where TNotification : Notification, new()
+        public static TNotification CreateNotificationType<TNotification>(string basePath) where TNotification : Notification
         {
-            var notificationType = (TNotification)Activator.CreateInstance(typeof(TNotification));
+            var notificationType = (TNotification)Activator.CreateInstance(typeof(TNotification), basePath);
             NotificationTypes.Add(notificationType);
 
             return notificationType;

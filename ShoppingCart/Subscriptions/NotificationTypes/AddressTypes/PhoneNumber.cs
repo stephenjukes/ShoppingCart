@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingCart.Subscriptions.NotificationTypes
 {
-    class PhoneNumber : IAddress
+    public class PhoneNumber : IAddress
     {
         public PhoneNumber(string phoneNumber)
         {

@@ -10,23 +10,30 @@ using ShoppingCart.Updated;
 namespace ShoppingCart.Subscriptions.NotificationTypes
 {
     public class EmailNotification : Notification
-    {
-        public override Type CommunicationType { get; } = typeof(EmailAddress);
-
-        protected override string FormatNotification(UserNotification notification)
+    { 
+        public EmailNotification(string communicationChannel) : base(communicationChannel)
         {
-            var lines = new string[] { notification.Summary, notification.Message, notification.Totals, notification.Conclusion };
+        }
+
+        public override Type CommunicationType { get; } = typeof(EmailAddress);
+        protected override int MessageNumber { get; set; }
+
+        protected override string FormatForNotificationSystem(UserNotification notification)
+        {
+            var lines = new string[] { notification.Title, notification.Message, notification.Totals, notification.Conclusion };
             return String.Join('\n', lines);
         }
 
-        protected override void SendNotification(string message)
+        protected override void SendNotification(string address, string summary, string message)
         {
-            // Implement sending by email
+            var inbox = Path.Combine(_communicationChannel, address);
+            var emailTitle = (++MessageNumber).ToString() + summary;
 
-            // For now, log to console
-            Console.WriteLine(message + '\n');  
+            Directory.CreateDirectory(inbox);
+            File.AppendAllText(Path.Combine(inbox, emailTitle), message);
+            Console.WriteLine(message + '\n');
         }
 
-        public override string ToString() => "email notification";
+        public override string ToString() => "Email";
     }
 }

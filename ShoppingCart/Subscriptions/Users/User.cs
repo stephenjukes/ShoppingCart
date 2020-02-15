@@ -11,11 +11,11 @@ namespace ShoppingCart.Subscriptions
 {
     public abstract class User
     {
-        private long _userId;
+        public long Id { get; }
 
-        public User(long userId, params IAddress[] contactDetails)
+        public User(long id, params IAddress[] contactDetails)
         {
-            _userId = userId;
+            Id = id;
             ContactDetails = contactDetails;
         }
 
@@ -31,7 +31,7 @@ namespace ShoppingCart.Subscriptions
             notificationType.Unsubscribe(contact);
         }
 
-        public abstract UserType Recipient { get; }
+        //public abstract UserType Recipient { get; }
 
         // It doesn't seem right that a user class should know about a user notification, but we'll do it like this for now.
         public abstract UserNotificationBuilder UserNotificationBuilder {get;}
