@@ -27,10 +27,10 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
 
         protected override void SendNotification(string address, string summary, string message)
         {
-            Directory.CreateDirectory(_communicationChannel);
+            //Directory.CreateDirectory(_communicationChannel);
 
-            var phoneNumber = Path.Combine(_communicationChannel, address);
-            File.AppendAllText(phoneNumber, message);
+            //var phoneNumber = Path.Combine(_communicationChannel, address);
+            //File.AppendAllText(phoneNumber, message);
 
             Console.WriteLine(message + '\n');
         }

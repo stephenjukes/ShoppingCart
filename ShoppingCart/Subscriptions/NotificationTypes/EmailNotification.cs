@@ -29,8 +29,8 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
             var inbox = Path.Combine(_communicationChannel, address);
             var emailTitle = (++MessageNumber).ToString() + summary;
 
-            Directory.CreateDirectory(inbox);
-            File.AppendAllText(Path.Combine(inbox, emailTitle), message);
+            //Directory.CreateDirectory(inbox);
+            //File.AppendAllText(Path.Combine(inbox, emailTitle), message);
             Console.WriteLine(message + '\n');
         }
 
