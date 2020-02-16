@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ShoppingCart.Totals
 {
+    // I'm not sure how basket totals can be updated without setters
     public interface ITotals
     {
-        // Instructions state that none of these should have setters!!!
         decimal SubTotal { get; set; }
         decimal Tax { get; set; }
         decimal Total { get; set; }

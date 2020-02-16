@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ShoppingCart.Common.Loggers;
 using ShoppingCart.ShoppingBasket;
 using ShoppingCart.ShoppingBasketItems;
+using ShoppingCart.Subscriptions.NotificationTypes;
 using ShoppingCart.Subscriptions.Users;
 using ShoppingCart.Updated;
 
-namespace ShoppingCart.Subscriptions.NotificationTypes
+namespace ShoppingCart.Subscriptions.NotificationSystems
 {
-    public class EmailNotification : Notification
+    public class EmailNotificationSystem : NotificationSystem
     { 
-        public EmailNotification(string communicationChannel) : base(communicationChannel)
+        public EmailNotificationSystem(string communicationChannel, ILogger logger) : base(communicationChannel, logger)
         {
         }
 
@@ -20,18 +22,19 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
 
         protected override string FormatForNotificationSystem(UserNotification notification)
         {
-            var lines = new string[] { notification.Title, notification.Message, notification.Totals, notification.Conclusion };
+            var title = StringHelpers.Border(70) + notification.Title + StringHelpers.Border(70);
+            var lines = new string[] { title, notification.Message, notification.Totals, notification.Conclusion };
             return String.Join('\n', lines);
         }
 
-        protected override void SendNotification(string address, string summary, string message)
+        protected override void SendNotification(string address, string title, string message)
         {
             var inbox = Path.Combine(_communicationChannel, address);
-            var emailTitle = (++MessageNumber).ToString() + summary;
+            var emailTitle = (++MessageNumber).ToString() + title;
 
             Directory.CreateDirectory(inbox);
             File.AppendAllText(Path.Combine(inbox, emailTitle), message);
-            Console.WriteLine(message + '\n');
+            _logger.LogInfo(message + '\n');
         }
 
         public override string ToString() => "Email";

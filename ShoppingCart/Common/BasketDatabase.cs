@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Subscriptions.Users.UserNotifications;
+﻿using ShoppingCart.Subscriptions.NotificationSystems;
+using ShoppingCart.Subscriptions.Users.UserNotifications;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Subscriptions.NotificationTypes;
+﻿using ShoppingCart.Subscriptions.NotificationSystems;
+using ShoppingCart.Subscriptions.NotificationTypes;
 using ShoppingCart.Totals;
 using ShoppingCart.Updated;
 using System;
@@ -7,20 +8,18 @@ using System.Text;
 
 namespace ShoppingCart.Subscriptions.Users.UserNotifications
 {
-    // I wonder if this could be abstracted
-    // Consider allowing messages and totals to be part of a list
     public class UserNotificationBuilder
     {
-        private Func<Notification, User, ShoppingUpdatedEventArgs, NotificationSummary> _summaryFunc;
+        private Func<NotificationSystem, User, ShoppingUpdatedEventArgs, NotificationSummary> _summaryFunc;
         private Func<NotificationSummary, string> _titleFunc;
         private Func<ShoppingUpdatedEventArgs, string> _messageFunc;
         private Func<ShoppingUpdatedEventArgs, string> _totalsFunc;
         private string _conclusionFunc;
-        private Notification _notificationType;
+        private NotificationSystem _notificationType;
         private User _user;
         private ShoppingUpdatedEventArgs _eventArgs;
 
-        public UserNotificationBuilder Summary(Func<Notification, User, ShoppingUpdatedEventArgs, NotificationSummary> summaryFunc)
+        public UserNotificationBuilder Summary(Func<NotificationSystem, User, ShoppingUpdatedEventArgs, NotificationSummary> summaryFunc)
         {
             _summaryFunc = summaryFunc;
             return this;
@@ -50,7 +49,7 @@ namespace ShoppingCart.Subscriptions.Users.UserNotifications
             return this;
         }
 
-        public UserNotificationBuilder NotificationType(Notification notificationType)
+        public UserNotificationBuilder NotificationType(NotificationSystem notificationType)
         {
             _notificationType = notificationType;
             return this;

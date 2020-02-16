@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Subscriptions.NotificationTypes;
+﻿using ShoppingCart.Subscriptions.NotificationSystems;
+using ShoppingCart.Subscriptions.NotificationTypes;
 using ShoppingCart.Totals;
 using ShoppingCart.Updated;
 using System;
@@ -9,7 +10,7 @@ namespace ShoppingCart.Subscriptions.Users.UserNotifications
 {
     public class NotificationSummary
     {
-        public NotificationSummary(User user, Notification notificationSystem, ITotals publisher, UpdateType updateType)
+        public NotificationSummary(User user, NotificationSystem notificationSystem, ITotals publisher, UpdateType updateType)
         {
             User = user;
             NotificationSystem = notificationSystem;
@@ -18,7 +19,7 @@ namespace ShoppingCart.Subscriptions.Users.UserNotifications
         }
 
         public User User { get; }
-        public Notification NotificationSystem { get; }
+        public NotificationSystem NotificationSystem { get; }
         public ITotals Publisher { get; }
         public UpdateType UpdateType { get; }
 

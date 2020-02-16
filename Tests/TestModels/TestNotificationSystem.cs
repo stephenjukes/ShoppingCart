@@ -1,7 +1,4 @@
-﻿using ShoppingCart.Subscriptions.NotificationTypes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ShoppingCart.Subscriptions.NotificationSystems;
 
 namespace Tests.TestModels
 {
@@ -9,8 +6,9 @@ namespace Tests.TestModels
     {
         public int Id { get; set; }
         public string NotificationSystemName { get; set; }
-        public Notification ActualEntity { get; set; }
+        public NotificationSystem ActualEntity { get; set; }
         public string CommunicationType { get; set; }
         public string CommunicationChannel { get; set; }
+        public string Logger { get; set; }
     }
 }

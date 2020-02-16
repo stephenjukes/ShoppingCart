@@ -1,7 +1,4 @@
-﻿using ShoppingCart.Subscriptions;
-using ShoppingCart.Totals;
-using ShoppingCart.Updated;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 

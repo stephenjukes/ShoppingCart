@@ -19,6 +19,5 @@ namespace ShoppingCart.ShoppingItem
         Apples,
         Soup,
         XBox
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using ShoppingCart.ShoppingBasket;
+﻿using ShoppingCart.Common.Loggers;
+using ShoppingCart.ShoppingBasket;
 using ShoppingCart.Subscriptions.Users;
 using ShoppingCart.Updated;
 using System;
@@ -7,16 +8,18 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace ShoppingCart.Subscriptions.NotificationTypes
+namespace ShoppingCart.Subscriptions.NotificationSystems
 {
-    public abstract class Notification
+    public abstract class NotificationSystem
     {
         protected readonly List<Contact> _contacts = new List<Contact>();
         protected readonly string _communicationChannel;
+        protected readonly ILogger _logger;
 
-        public Notification(string communicationChannel)
+        public NotificationSystem(string communicationChannel, ILogger logger)
         {
             _communicationChannel = communicationChannel;
+            _logger = logger;
         }
 
         public abstract Type CommunicationType { get; }
@@ -35,7 +38,7 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
                 BasketDatabase.NotificationSummaries.Add(userNotification.Summary);
 
                 var message = FormatForNotificationSystem(userNotification);
-                SendNotification(contact.Address.Address, userNotification.Title, message);
+                SendNotification(contact.Address.Code, userNotification.Title, message);
             }
         }
 

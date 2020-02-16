@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ShoppingCart.ShoppingBasket;
-using ShoppingCart.ShoppingBasketItems;
+﻿using ShoppingCart.ShoppingBasket;
 
 namespace ShoppingCart.TaxRules
 {
@@ -23,7 +18,5 @@ namespace ShoppingCart.TaxRules
 
             return tax;
         }
-
-
     }
 }

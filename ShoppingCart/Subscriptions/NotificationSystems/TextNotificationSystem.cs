@@ -1,4 +1,6 @@
-﻿using ShoppingCart.ShoppingBasket;
+﻿using ShoppingCart.Common.Loggers;
+using ShoppingCart.ShoppingBasket;
+using ShoppingCart.Subscriptions.NotificationTypes;
 using ShoppingCart.Subscriptions.Users;
 using ShoppingCart.Updated;
 using System;
@@ -6,11 +8,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ShoppingCart.Subscriptions.NotificationTypes
+namespace ShoppingCart.Subscriptions.NotificationSystems
 {
-    public class TextNotification : Notification
+    public class TextNotificationSystem : NotificationSystem
     {
-        public TextNotification(string communicationChannel) : base(communicationChannel)
+        public TextNotificationSystem(string communicationChannel, ILogger logger) : base(communicationChannel, logger)
         {
         }
 
@@ -19,20 +21,20 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
 
         protected override string FormatForNotificationSystem(UserNotification notification)
         {
-            var summary = StringHelpers.Border(70) + notification.Summary + StringHelpers.Border(70);
-            var lines = new string[] {summary, notification.Message, notification.Conclusion };
+            var title = StringHelpers.Border(50) + notification.Title + StringHelpers.Border(50);
+            var lines = new string[] {title, notification.Message, notification.Conclusion };
 
             return String.Join('\n', lines);
         }
 
-        protected override void SendNotification(string address, string summary, string message)
+        protected override void SendNotification(string address, string title, string message)
         {
             Directory.CreateDirectory(_communicationChannel);
 
             var phoneNumber = Path.Combine(_communicationChannel, address);
             File.AppendAllText(phoneNumber, message);
 
-            Console.WriteLine(message + '\n');
+            _logger.LogInfo(message + '\n');
         }
 
         public override string ToString() => "Text";

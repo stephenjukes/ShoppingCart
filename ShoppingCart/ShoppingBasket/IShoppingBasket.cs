@@ -11,6 +11,5 @@ namespace ShoppingCart.ShoppingBasket
         IShoppingBasketItem AddItem(IShoppingItem item, int quantity);
         IShoppingBasketItem RemoveItem(IShoppingItem item);
         IEnumerable<IShoppingBasketItem> Items { get; }
-
     }
 }
