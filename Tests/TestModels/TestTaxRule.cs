@@ -1,7 +1,4 @@
 ﻿using ShoppingCart.TaxRules;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Tests.TestModels
 {

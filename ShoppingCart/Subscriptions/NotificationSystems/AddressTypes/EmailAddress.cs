@@ -4,13 +4,13 @@ using System.Text;
 
 namespace ShoppingCart.Subscriptions.NotificationTypes
 {
-    public class PhoneNumber : IAddress
+    public class EmailAddress : IAddress
     {
-        public PhoneNumber(string phoneNumber)
+        public EmailAddress(string emailAddress)
         {
-            Address = phoneNumber;
+            Code = emailAddress;
         }
 
-        public string Address { get; }
+        public string Code { get; }
     }
 }

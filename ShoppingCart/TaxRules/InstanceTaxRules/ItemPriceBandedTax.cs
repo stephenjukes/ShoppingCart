@@ -21,8 +21,8 @@ namespace ShoppingCart.TaxRules.InstanceTaxRules
             foreach(var band in _taxBands)
             {
                 var applicableValue = (band.Cap ?? item.UnitPrice) - band.Threshold;
-                // take this instantiation out of here
-                var temporaryItem = new DefaultShoppingBasketItem { SubTotal = applicableValue };
+
+                var temporaryItem = new DefaultShoppingBasketItem { SubTotal = applicableValue, Quantity = 1};   // remove explicit instantiation from here
                 unitItemTax += band.TaxRule.CalculateTax(basket, temporaryItem);
             }
 
@@ -30,6 +30,13 @@ namespace ShoppingCart.TaxRules.InstanceTaxRules
             UpdateTotals(basket, item, itemTax);
 
             return itemTax;
+        }
+
+        // Not completely happy with this solution
+        protected override void UpdateTotals(IShoppingBasket basket, IShoppingBasketItem item, decimal tax)
+        {
+            item.Tax += tax;
+            item.Total += tax;
         }
     }
 }

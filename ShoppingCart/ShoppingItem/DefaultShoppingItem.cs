@@ -20,7 +20,7 @@ namespace ShoppingCart.ShoppingItem
         }
 
         public long Id { get; }
-        public Item Name { get; }   // of type Item, since we're using enums
+        public Item Name { get; }
         public decimal UnitPrice { get; }
         public IEnumerable<ITaxRule> TaxRules { get; }
     }

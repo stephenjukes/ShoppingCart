@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using ShoppingCart.ShoppingItem;
-using ShoppingCart.Subscriptions.NotificationTypes;
+using ShoppingCart.Subscriptions.NotificationSystems;
 using ShoppingCart.TaxRules;
 using ShoppingCart.Updated;
 
@@ -14,7 +13,6 @@ namespace ShoppingCart.ShoppingBasketItems
         { 
         }
 
-        // Is this really the only way I can populate readonly properties ???
         public DefaultShoppingBasketItem(long id, Item name, decimal unitPrice, IEnumerable<ITaxRule> taxRules)
         {
             Id = id;
@@ -29,17 +27,16 @@ namespace ShoppingCart.ShoppingBasketItems
         public Item Name { get; }
         public decimal UnitPrice { get; }
         public IEnumerable<ITaxRule> TaxRules { get; }
-        // Instructions state that none of these should have setters!!!
         public decimal SubTotal { get; set; }
         public decimal Tax { get; set; }
         public decimal Total { get; set; }
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        // This seems a bit strange to me, but the only way I can think of given the item itself 
-        // implements IUpdated and must be responsible for updating subscribers
+        /* This seems a bit strange to me, but the only way I can think of, given the item itself implements IUpdated 
+           and must be responsible for updating subscribers */
         private void ExposeToSubscribers()
         {
-            foreach (var notificationType in NotificationFactory.NotificationTypes)
+            foreach (var notificationType in NotificationSystemFactory.NotificationSystems)
             {
                 Updated += (object shoppingBasketItem, ShoppingUpdatedEventArgs eventArgs)
                     => notificationType.HandleUpdated(shoppingBasketItem, eventArgs);

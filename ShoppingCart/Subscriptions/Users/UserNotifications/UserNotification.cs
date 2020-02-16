@@ -8,7 +8,6 @@ using System.Text;
 
 namespace ShoppingCart.Subscriptions.Users
 {
-    // Make an abstraction of this?
     public class UserNotification
     {
         public UserNotification(NotificationSummary summary, string title, string message, string totals, string conclusion)

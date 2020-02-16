@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using FluentAssertions;
 using ShoppingCart;
 using ShoppingCart.ShoppingBasket;
 using ShoppingCart.ShoppingBasketItems;
 using ShoppingCart.ShoppingItem;
 using ShoppingCart.Subscriptions;
+using ShoppingCart.Subscriptions.NotificationSystems;
 using ShoppingCart.Subscriptions.NotificationTypes;
 using ShoppingCart.Subscriptions.Users;
 using ShoppingCart.Subscriptions.Users.UserNotifications;
@@ -22,9 +22,7 @@ using Tests.TestModels;
 namespace Tests
 {
     [Binding]
-    // Change this name while keeping steps bound
-    // Comments needed for each assertion
-    public class SpecFlowFeature1Steps
+    public class ShoppingBasketSteps
     {
         private IShoppingBasket _shoppingBasket;
         private IEnumerable<TestTaxRule> _testTaxRules = new TestTaxRule[0];
@@ -44,29 +42,23 @@ namespace Tests
         [Given(@"there are no user subscribers")]
         public void GivenThereAreNoUserSubscribers()
         {
-            foreach(var notificationSystem in NotificationFactory.NotificationTypes)
+            foreach(var notificationSystem in NotificationSystemFactory.NotificationSystems)
             {
-                var actualMailingList = ((List<Contact>)(typeof(Notification).GetField("_contacts", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(notificationSystem)));
+                var actualMailingList = ((List<Contact>)(typeof(NotificationSystem).GetField("_contacts", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(notificationSystem)));
                 actualMailingList.Clear();
             }
         }
 
-
         [Given(@"a new basket is instantiated")]
         public void WhenANewBasketIsInstantiated()
         {
+            // amend to take concretion as parameter
             _shoppingBasket = new DefaultBasket();
-            //Probably not necessary now.
-            //_shoppingItems = ((IEnumerable<Item>)Enum.GetValues(typeof(Item)))
-            //    .Select((item, index) => new DefaultShoppingItem(index, item));
         }
 
         [Given(@"the following tax rules:")]
         public void GivenTheFollowingTaxRules(Table table)
         {
-            //var b = a.TaxRule;
-            //var c = typeof(TaxRules).GetField(b).GetValue(typeof(TaxRules));
-
             _testTaxRules = table.CreateSet<TestTaxRule>()
                 .Select(row =>
                    {
@@ -84,7 +76,6 @@ namespace Tests
                        }  
                    });
         }
-
 
         [Then(@"the basket has (\d+) items")]
         public void ThenTheBasketHasItems(int expectedNumberOfItems)
@@ -117,21 +108,14 @@ namespace Tests
             // Better to use https://fluentassertions.com/exceptions/
             var expectedExceptionType = Type.GetType("System." + expectedExceptionName);
             _exception.Should().BeOfType(expectedExceptionType);
-            _exception.Message.Should().Contain(expectedMessage);   // 'Contain' not ideal. Improve if time
-
-            //var exceptionType = Type.GetType("System." + exceptionName);
-            //var should = _invocation.Should();
-            //var method = should.GetType().GetMethod("Throw").MakeGenericMethod(exceptionType).Invoke(should, new object[0]);
+            _exception.Message.Should().Contain(expectedMessage);
 
             Console.WriteLine();
-
         }
 
-        // Refactor into smaller methods???
         [When(@"the following items are added:")]
         public void WhenTheFollowingItemsAreAdded(Table table)
         {
-            // Refactor to base steps???
             var itemsForBasket = table.CreateSet<TestShoppingItem>()
                 .Select(row =>
                 {
@@ -140,7 +124,6 @@ namespace Tests
                     {
                         Quantity = row.Quantity,
                         ShoppingItem = CreateItem<DefaultShoppingItem>(row.Id, row.Name, row.UnitPrice.IntoDecimal(), taxRules)
-                        //ShoppingItem = new DefaultShoppingItem(row.Id, row.Name, row.UnitPrice.IntoDecimal(), taxRules)
                     };
                 });
 
@@ -175,15 +158,6 @@ namespace Tests
 
         private TItem CreateItem<TItem>(long id, Item name, decimal unitPrice, IEnumerable<ITaxRule> taxRules) where TItem : IShoppingItem
             => (TItem)Activator.CreateInstance(typeof(TItem), id, name, unitPrice, taxRules);
-        
-
-        [Then(@"the item '(\w+)' has a subtotal of '(.?[\d+,]+\.?\d{0,2}[a-z]?)'")]
-        public void ThenTheItemHasASubtotalOfP(string itemName, string expectedSubtotal)
-        {
-            var basketItem = GetBasketItem(itemName);
-
-            basketItem.SubTotal.Should().Be(expectedSubtotal.IntoDecimal());
-        }
 
         [Then(@"the basket has a subtotal of '(.?[\d+,]+\.?\d{0,2}[a-z]?)'")]
         public void ThenTheBasketHasASubtotalOfP(string expectedSubtotal)
@@ -194,7 +168,6 @@ namespace Tests
         [Then(@"the basket contains the following items:")]
         public void ThenTheBasketContainsTheFollowingItems(Table table)
         {
-            // Ideally we should be creating an instance of DefaultShoppingBasketItem, but this causes problems.
             var expectedBasketItems = table.CreateSet<TestShoppingBasketItem>()
             .Select(row =>
                 {
@@ -204,17 +177,17 @@ namespace Tests
 
                     var taxRules = GetTaxRulesFromIds(row.TaxRuleIds);
                     return new DefaultShoppingBasketItem(row.Id, row.Name, row.UnitPrice, taxRules)
-                        {
-                            Quantity = quantity,
-                            SubTotal = row.SubTotal.IntoDecimal(),
-                            Tax = row.Tax.IntoDecimal(),
-                            Total = row.Total.IntoDecimal()
-                        };
+                    {
+                        Quantity = quantity,
+                        SubTotal = row.SubTotal.IntoDecimal(),
+                        Tax = row.Tax.IntoDecimal(),
+                        Total = row.Total.IntoDecimal()
+                    };
                 });
 
             _shoppingBasket.Items.Should().BeEquivalentTo(expectedBasketItems, options => options
-                    .Excluding( o => o.UnitPrice )
-                    .Excluding( o => o.TaxRules)
+                    .Excluding(o => o.UnitPrice)
+                    .Excluding(o => o.TaxRules)
                 );
         }
 
@@ -239,9 +212,13 @@ namespace Tests
             _testNotificationSystems = table.CreateSet<TestNotificationSystem>()    
                 .Select(row =>
                 {
-                    var genericType = Type.GetType($"ShoppingCart.Subscriptions.NotificationTypes.{row.NotificationSystemName}, ShoppingCart");
-                    var notificationCreator = typeof(NotificationFactory).GetMethod("CreateNotificationType");
-                    var notificationSystem = (Notification)notificationCreator.MakeGenericMethod(genericType).Invoke(typeof(NotificationFactory), new object[] { row.CommunicationChannel });
+                    var loggerType = Type.GetType($"ShoppingCart.Common.Loggers.{row.Logger}, ShoppingCart");
+                    var logger = Activator.CreateInstance(loggerType, new object[0]);
+                    var genericType = Type.GetType($"ShoppingCart.Subscriptions.NotificationSystems.{row.NotificationSystemName}, ShoppingCart");
+                    var notificationCreator = typeof(NotificationSystemFactory).GetMethod("CreateNotificationType");
+                    var notificationSystem = (NotificationSystem)notificationCreator
+                        .MakeGenericMethod(genericType)
+                        .Invoke(typeof(NotificationSystemFactory), new object[] { row.CommunicationChannel, logger });
 
                     return new TestNotificationSystem
                     {
@@ -270,7 +247,6 @@ namespace Tests
         {
             foreach (var testNotificationSystem in _testNotificationSystems)
             {
-                _shoppingBasket.Updated -= (object basket, ShoppingUpdatedEventArgs e) => testNotificationSystem.ActualEntity.HandleUpdated(basket, e);
                 _shoppingBasket.Updated += (object basket, ShoppingUpdatedEventArgs e) => testNotificationSystem.ActualEntity.HandleUpdated(basket, e);
             }
         }
@@ -285,21 +261,18 @@ namespace Tests
                 var user = GetUserFromId(subscription.UserId);
                 var notificationSystems = GetNotificationSystemFromCommunicationType(subscription.CommunicationTypes);
 
-                // this code is exactly the same as in Program
                 foreach (var notificationSystem in notificationSystems)
                 {
-                    // The Subscribe method should be on the notification system only !!
                     var contactDetail = user.ContactDetails.FirstOrDefault(c => c.GetType() == notificationSystem.CommunicationType);
                     user.Subscribe(notificationSystem, contactDetail);
                 }
             }
         }
 
-        // Try to amend this regex
         [When(@"items '(.*)' are removed")]
         public void WhenItemsAreRemoved(string itemStringIds)
         {
-            var itemIds = itemStringIds.Split(',').Select(s => int.Parse(s.Trim()));  // int.TryParse?
+            var itemIds = itemStringIds.Split(',').Select(s => int.Parse(s.Trim()));
 
             var basketItems = itemIds
                 .Select(id => _shoppingBasket.Items.FirstOrDefault(i => i.Id == id))
@@ -314,28 +287,6 @@ namespace Tests
             }
         }
 
-        // '((\d+,?\s?)+)'
-        //[Then(@"only the users '(.*)' are on the '(\w+)' mailing list")]
-        //public void ThenOnlyTheUsersAreOnTheMailingList(string userStringIds, string communicationType)
-        //{
-        //    // Same as item string ids - abstract to another method
-        //    var expectedMailingList = userStringIds.Split(',').Select(s => int.Parse(s.Trim()));
-
-        //    var notificationSystem = _testNotificationSystems.FirstOrDefault(n => n.CommunicationType == communicationType).ActualEntity;
-        //    if (notificationSystem == null) throw new ArgumentException($"No notification system exists for {communicationType} notifications");
-
-        //    var actualMailingList = ((List<Contact>)(typeof(Notification).GetField("_contacts", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(notificationSystem)))
-        //        .Select(c => c.User.Id);
-
-        //    actualMailingList.Should().BeEquivalentTo(expectedMailingList);
-        //}
-
-        //[Then(@"only the following '(.*)' addresses exist")]
-        //public void ThenOnlyTheFollowingAddressesExist(string communicationType, Table table)
-        //{
-        //    var addresses = table.CreateSet<TestAddress>().Select(row => row.Address);
-        //}
-
         [Then(@"only the following notifications are received")]
         public void ThenOnlyTheFollowingNotificationsAreReceived(Table table)
         {
@@ -345,7 +296,6 @@ namespace Tests
                     var user = _users.FirstOrDefault(u => u.Id == row.UserId);
                     var notificationSystem = _testNotificationSystems.FirstOrDefault(n => n.CommunicationType == row.CommunicationType).ActualEntity;
                     var updateType = row.UpdateType.ToEnum<UpdateType>();
-                    //var isEnum =   Enum.TryParse(row.UpdateType, out UpdateType updateType);
                     var publisherType = Assembly.Load("ShoppingCart").GetTypes()
                         .Where(t =>
                             typeof(ITotals).IsAssignableFrom(t)
@@ -376,7 +326,6 @@ namespace Tests
         {
             if (taxRuleIds == null) return new ITaxRule[0];
 
-            // throw exception if no TaxRule Id exists or TaxRule cannot be found by that name. (not necessarily here)
             return _testTaxRules
                 .Where(t => taxRuleIds.Contains(t.Id))
                 .Select(t => t.ActualEntity);
@@ -386,24 +335,13 @@ namespace Tests
             => _users.FirstOrDefault(u => u.Id == userId);
 
         
-        private IEnumerable<Notification> GetNotificationSystemFromCommunicationType(IEnumerable<string> communicationTypes)
+        private IEnumerable<NotificationSystem> GetNotificationSystemFromCommunicationType(IEnumerable<string> communicationTypes)
         {
-            if (communicationTypes == null) return new Notification[0];
+            if (communicationTypes == null) return new NotificationSystem[0];
 
             return _testNotificationSystems
                 .Where(n => communicationTypes.Contains(n.CommunicationType))
                 .Select(n => n.ActualEntity);
         }
-
-        // An attempt to abstact the Get methods for TaxRules and NotificationSystems
-        //private IEnumerable<ActualObject> GetEntityFromId<TestObject, ActualObject>(IEnumerable<TestObject> testEntities,  IEnumerable<int> ids)
-        //    where TestObject : TestEntity<ActualObject>
-        //{
-        //    if (ids == null) return new ActualObject[0];
-
-        //    return testEntities
-        //        .Where(t => ids.Contains(t.Id))
-        //        .Select(t => (ActualObject)t.ActualEntity);
-        //}
     }
 }

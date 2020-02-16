@@ -6,6 +6,6 @@ namespace ShoppingCart.Subscriptions.NotificationTypes
 {
     public interface IAddress
     {
-        string Address { get; }
+        string Code { get; }
     }
 }

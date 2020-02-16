@@ -9,7 +9,7 @@ namespace ShoppingCart.ShoppingItem
     {
         long Id { get; }
         Item Name { get; }
-        decimal UnitPrice { get; }  // I assume this needs to be here
+        decimal UnitPrice { get; }
         IEnumerable<ITaxRule> TaxRules { get; }
     }
 }

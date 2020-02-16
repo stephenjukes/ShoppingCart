@@ -1,11 +1,5 @@
-﻿using ShoppingCart;
-using ShoppingCart.ShoppingItem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Text.RegularExpressions;
-using Tests.TestModels;
 
 namespace Tests
 {
@@ -13,12 +7,11 @@ namespace Tests
     {
         public static decimal IntoDecimal(this string price)
         {
-            if (String.IsNullOrEmpty(price))
-                return 0;
+            if (String.IsNullOrEmpty(price)) return 0;
 
             var priceNumerics = new Regex(@"\d+\.?\d{0,2}").Match(price).Value;
             if (String.IsNullOrEmpty(priceNumerics))
-                throw new ArgumentOutOfRangeException("Unrecognised price format");    // Is this necessary given the step regex parameter constraint?
+                throw new FormatException("Unrecognised price format");
 
             if (price.Split('.').Length == 2)
                 return decimal.Parse(priceNumerics);
@@ -27,22 +20,12 @@ namespace Tests
             return hasUpperDenomination ? decimal.Parse(priceNumerics) : decimal.Parse(priceNumerics) / 100;
         }
 
-        public static T ToEnum<T>(this string itemName) where T : struct // Is struct correct?
+        public static EnumType ToEnum<EnumType>(this string itemName) where EnumType : struct, IConvertible
         {
-            var isEnum = Enum.TryParse(itemName, true, out T itemEnum);
+            var isEnum = Enum.TryParse(itemName, true, out EnumType itemEnum);
             if (!isEnum) throw new InvalidOperationException($"Item name {itemName} is not recognised");
 
             return itemEnum;
-        }
-
-        public static  IEnumerable<TActual> GetEntitiesFromIds<TTest, TActual>(this IEnumerable<TTest> testEntities, IEnumerable<int> ids)
-            where TTest : TestEntity<TActual>
-        {
-            if (ids == null) return new TActual[0];
-
-            return testEntities
-                .Where(t => ids.Contains(t.Id))
-                .Select(t => (TActual)t.ActualEntity);
         }
     }
 }
